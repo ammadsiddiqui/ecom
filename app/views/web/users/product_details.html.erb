@@ -1,0 +1,137 @@
+
+<style type="text/css">
+    .activea{
+        background: #D6D6D1!important;
+    }
+</style>
+<%arr = @product.image { |i| i&.file&.url}%>
+<%arr = arr[0..3]%>
+<div class="container">
+    <div class="row navtop">
+        <ul class="nav1">
+            <%@all_sub_category.each do |sub|%>
+            <li class="nav2"><a class='<%= @product.sub_category.id == sub.id ? "activea" : "" %>' href="/web/users/<%=sub.id%>/movie_category">
+                    <%=sub&.sub_category_name%></a></li>
+            <%end%>
+        </ul>
+    </div>
+</div>
+
+
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <%arr.each_with_index do |img,index|%>
+        <li data-target="#carouselExampleIndicators" data-slide-to="<%=index%>" class='<%= index == 0 ? "active" : "" %>'></li>
+        <%end%>
+         </ol>
+    <div class="carousel-inner">
+        <%arr.each_with_index do |img,index|%>
+        <div class='carousel-item <%= index == 0 ? "active" : "" %>'>
+            <img class="d-block w-100" src="<%=img&.file&.url%>" alt="First slide" height="530px;">
+        </div>
+        <%end%>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    </a>
+</div>
+<div class="page-wrapper page-Nav2">
+    <%#= render partial: 'web/users/trending'%>
+    <div class="container home-wrap">
+        <div class="row theatres-row">
+            <div class="col-md-9">
+                <div class="row">
+                    <div class="col-md-6 leftsec">
+                        <h4 class="topheading">
+                            <%=@product&.product_name%>
+                        </h4>
+                    </div>
+                </div>
+                <div>
+                    <p class="mainpara">
+                        <%=ActionView::Base.full_sanitizer.sanitize(@product&.description)%>
+                    </p>
+                </div>
+            </div>
+          
+        </div>
+        <div class="heading">
+            <h2 class="titile-light">You may also like:</h2>
+        </div>
+        <div class="custom-slider slidw">
+            <%@products_details&.each do |product|%>
+            <a href="/web/users/<%=product.id%>/movie_detail" class="custom-post custom-slide">
+                <div class="custom-img">
+                    <img src='<%= product&.image&.first&.file&.present? ? product&.image&.first&.file.try(:url) : "/assets/tv58.png" %>' class="img-fluid " alt="">
+                </div>
+                <div class="custom-content justify-content-end">
+                    <h4 class="custom-title">
+                        <%=product&.product_name%>
+                    </h4>
+                    <p class="mb-2">
+                        <%= truncate(strip_tags(product&.description), omision: "...", length: 130).html_safe%>
+                    </p>
+                    <!-- <a href="#" class="view-more align-self-end">View More</a> -->
+                </div>
+            </a>
+            
+           
+           <%end%>
+        </div>
+    </div>
+</div>
+</div>
+<script>
+    $('.custom-slider').slick({
+    dots: false,
+    infinite: true,
+    autoplay: true,
+    speed: 300,
+    slidesToShow: 3,
+    responsive: [
+    {
+      breakpoint: 1024,
+      settings: {
+        slidesToShow: 3,
+        slidesToScroll: 1,
+        infinite: true,
+      }
+    },
+    {
+      breakpoint: 991,
+      settings: {
+        slidesToShow: 2,
+        slidesToScroll: 1,
+        infinite: true,
+      }
+    },
+    {
+      breakpoint: 767,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      }
+    },
+    {
+      breakpoint: 480,
+      settings: {
+        slidesToShow: 1,
+        slidesToScroll: 1,
+      }
+    }
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+        ]
+      });
+
+    </script>
+<style type="text/css">
+.video_product {
+    height: 100%;
+    max-height: 359px;
+    width: 100%;
+    max-width: 976px;
+}
+</style>

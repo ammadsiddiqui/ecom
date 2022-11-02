@@ -1,0 +1,83 @@
+<div class="center jumbotron">
+  <%= form_with model: @order, url: web_orders_path(@order) do |f| %>
+  <% if @order.errors.any? %>
+    <div id="error_explanation">
+      <h2><%= pluralize(@order.errors.count, "error") %>
+        prohibited this order from being saved:</h2>
+      <ul>
+        <% @order.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+  <div class="form-group">
+    <label for="exampleInputEmail1">Name</label>
+    <%= f.text_field :name, required: true, autofocus: true, class: "form-control" %>
+  </div>
+    <div class="form-group">
+    <label for="exampleInputEmail1">Number</label>
+    <%= f.text_field :number, required: true, autofocus: true, class: "form-control" %>
+  </div>
+      <div class="form-group">
+    <label for="exampleInputEmail1">Pin Code</label>
+    <%= f.text_field :pin_code, required: true, autofocus: true, class: "form-control" %>
+  </div>
+    <div class="form-group">
+    <label for="exampleInputEmail1">Full Address</label>
+    <%= f.text_field :address, required: true, autofocus: true, class: "form-control" %>
+  </div>
+  <%= hidden_field_tag "total_price", @cart.sub_total %>
+    <script src="https://checkout.stripe.com/checkout.js" class="stripe-button"
+          data-key="<%= Rails.configuration.stripe[:publishable_key] %>"
+          data-description="pay for service"
+          data-locale="auto"></script>
+
+    <%#= render 'shared/cart2' , :cart => @cart %>
+    <div class="center jumbotron">
+ <p>
+  <h3>Total price:
+   <%= number_to_currency(@cart.sub_total) %></h3>
+ </p>
+ <ul class="users">
+  <% @cart.cart_items.each do |cart_item| %>
+   <%#= render 'shared/product' , :product => cart_item.product %>
+
+   <li>
+  <%#= product = cart_item.product%>
+  <% if cart_item.product.image.present? %>
+    <%= image_tag cart_item.product&.image&.take&.file_url , size:"100x100"%>
+  <% else %>
+    <%= image_tag "/assets/images/arrow.png", size:"100x100" %>
+  <%end%>
+
+<strong>
+  Name :
+</strong>
+<%= cart_item.product.product_name %>
+,<strong>
+  Description :
+</strong>
+<%= cart_item.product.description %>
+<strong>
+  Price :
+</strong>
+<%= cart_item.product.price %> $
+
+
+<p>
+
+</p>
+</li>
+   <li>Quantity:
+    <%= cart_item.quantity %>
+    | Total Price:
+    ₹ <%= cart_item.total_price %>
+
+    <hr class="style18">
+   <% end %>
+ </ul>
+
+</div>
+  <% end %>
+</div>

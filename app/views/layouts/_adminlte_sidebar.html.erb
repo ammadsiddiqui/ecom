@@ -1,0 +1,95 @@
+  <aside class="main-sidebar">
+
+    <!-- sidebar: style can be found in sidebar.less -->
+    <section class="sidebar">
+
+      <!-- Sidebar user panel (optional) -->
+      <div class="user-panel">
+        <div class="pull-left image">
+          <img src="/assets/circle.png" class="img-circle" alt="User Image">
+        </div>
+        <div class="pull-left info">
+        <p>Welcome <%= current_user&.name %></p>
+
+          <!-- Status -->
+          <!-- <a href="#"><i class="fa fa-circle text-success"></i> Online</a> -->
+        </div>
+      </div>
+
+      
+
+      <!-- Sidebar Menu -->
+       <!-- Sidebar Menu -->
+    <ul class="sidebar-menu">
+      <!-- <li class="header">HEADER</li> -->
+        <!-- Optionally, you can add icons to the links -->
+      <li id="index"><a href="/admin/home/index"><i class='fa fa-link'></i> <span>Dashboard</span></a></li>
+      <li id="categories"><a href="/admin/categories"><i class="fa fa-link"></i> <span>Category Management</span></a></li>
+      <li id="products"><a href="/admin/products"><i class="fa fa-link"></i> <span>Products Management</span></a></li>
+      <li id="users"><a href="/admin/users"><i class="fa fa-users"></i> <span>User Management</span></a></li>
+      
+
+    </ul>
+    <!-- /.sidebar-menu -->
+      <!-- /.sidebar-menu -->
+    </section>
+    <!-- /.sidebar -->
+  </aside>
+
+
+  <script type="text/javascript">
+ // on click change active class js on home page.
+$(function() {
+ // debugger;
+pathname = window.location.pathname;
+url_array = location.pathname.split("/");
+if (url_array.length <= 2)
+ { 
+ element = $("#"+url_array[1])[0];
+ element.classList.add("active");
+ }
+ else if(url_array.length == 3)
+ {
+ element = $("#"+url_array[2])[0];
+   element.classList.add("active");
+ }
+else if(url_array.length==4)
+ {
+   if (url_array[3]=="feedback" || url_array[3] == "index")
+   {
+     element = $("#"+url_array[3])[0];
+    element.classList.add("active");
+   }
+   else
+   {
+   element = $("#"+url_array[2])[0];
+   element.classList.add("active");
+   }
+ }
+ else if(url_array.length == 5 && url_array[4]=="edit")
+ {
+  element = $("#"+url_array[2])[0];
+  element.classList.add("active");
+ }
+
+else if(url_array.length<=4 && url_array[2] == "faqs")
+ {
+ element = $("#"+url_array[2])[0];
+   element.classList.add("active");
+ }
+ 
+else
+ {
+    element = $("#"+url_array[4])[0];
+    element.classList.add("active");
+ }
+});
+// on click change active class js end on home page.
+</script>
+<style type="text/css">
+ .skin-blue .sidebar-menu>li:hover>a, .skin-blue .sidebar-menu>li.active>a {
+   color: #fff;
+   background: #f39c12;
+   border-left-color: #3c8dbc;
+}
+</style>

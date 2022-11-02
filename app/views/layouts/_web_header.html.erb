@@ -1,0 +1,164 @@
+<header id="header" class="header">
+    <nav id="main-navbar" class="main-navbar navbar navbar-expand-lg bg-primary">
+        <div class="headerTop">
+            <a class="navbar-brand" href="<%= root_path%>"><img src="/assets/LOGO.png"></a>
+            <ul class="navbar-nav align-items-center">
+                <li class="nav-item">
+                    <!-- <form class="header-search"> -->
+                        <%= form_tag "/web/users", method: :get, class: "header-search" do %>
+                         <input type="search" name="search" class="form-control" placeholder="Search">
+                         <img src="/assets/search.png">
+                    <!-- </form> -->
+                        <%end%>
+                </li>
+            </ul>
+            <ul class="navbar-nav align-items-center">
+                <%if current_user%>
+                <li class="nav-item user-item">
+                    <a class="" href="/web/users/<%= current_user.id %>/user_profile">
+                        <span>
+                         <%= current_user&.name%>
+                       </span> 
+                </a>
+            </li>
+                <div class="nav-link btn btn-theme" >
+                <li><%= link_to 'Logout', web_session_path(current_user.id), method: :delete, class: "" %></li>
+                </div>
+
+                </li>
+                <!-- Cart -->
+      <li><%= link_to web_cart_path(@current_cart) do %>
+        My Cart
+        <span class="badge ">
+          <i class="fa fa-cart-plus" style="color:#FFD700; font-size:20px"></i>
+
+          <i id="total_cart_items_badge">(<%= @current_cart.cart_items.count %>)</i>
+        </span>
+      <% end %>
+    </li>
+
+    <!-- Orders -->
+    <li><%= link_to web_orders_path do %>
+      My Orders
+      <span class="badge ">
+          <i class="fa fa-shopping-basket" style="color:#FFD700; font-size:20px"></i>
+          (<%= current_user.orders.count %>)
+
+      </span>
+    <% end %>
+  </li>
+                <%else%>
+                <li>
+                    <%= link_to "+ Join Us", new_web_user_path, :class => 'nav-link btn btn-theme mr-3'  %>
+                </li>
+                <li>
+                    <%= link_to "Login", new_web_session_path, :class => 'nav-link btn btn-theme'  %>
+                </li>
+                <%end%>
+            </ul>
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+        </div>
+        <%#binding.pry%>
+        <%if request.url == "http://localhost:3000/web/orders"%>
+        <div>
+            
+        </div>
+        <%else%>
+        <div class="collapse navbar-collapse" id="navbarSupportedContent">
+            <ul class="navbar-nav align-items-center main-nav">
+                <%if @product.present?%>
+                <%xyz = @product&.category&.id%>
+                <%else%>
+                <%xyz = @sub_category&.category&.id%>
+                <%end%>
+                <% @category.each do |category|%>
+                <li class="nav-item dropdown mega-dropdown">
+                    <a class="nav-link user_type dropdown-toggle shubham <%= xyz == category.id ? "active" : "" %>"  data-toggle="dropdown" aria-haspopup="true" aria-expanded="false" href="javascript:void(0);" id="<%= category.id%>">
+                        <%= category.category_name%></a>
+                    <div class="dropdown-menu mega-menu">
+                        <div class="row">
+                            <div class="col-md-3">
+                                <div class="custom-post m-0">
+                                    <div class="custom-img">
+                                        <% arr = category.sub_categories.map{ |s_c| s_c.products.map { |p| p&.image&.first&.file&.url}}.flatten.compact%>
+                                        <%if arr.present? %>
+                                        <img src="<%=arr[0]%>" class="img-fluid" alt="">
+                                        <%else%>
+                                        <img src="/assets/mega-drop-img.jpg" class="img-fluid" alt="">
+                                        <%end%>
+                                    </div>
+                                    <div class="custom-content justify-content-end">
+                                        <p class="mb-2">
+                                            <%= category.category_name%>
+                                        </p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-9">
+                                <div class="row">
+                                    <% category&.sub_categories.each_with_index do |sub, index| %>
+                                    <% if index <= 2 && index %>
+                                    <div class="col-md-3">
+                                        <ul class="mega-menu-list">
+                                            <li>
+                                                <a class="" role="button" href="/web/users/<%=sub.id%>/product_category">
+                                                    <%= sub&.sub_category_name%></a>
+                                            </li>
+                                           
+                                        </ul>
+                                    </div>
+                                    <!-- </div> -->
+                                    <% elsif index <= 5%>
+                                    <div class="col-md-3">
+                                        <ul class="mega-menu-list">
+                                            <li><a href="/web/users/<%=sub.id%>/product_category">
+                                                    <%= sub&.sub_category_name%></a></li>
+                                        </ul>
+                                    </div>
+                                    <%elsif index <= 19%>
+                                    <div class="col-md-3">
+                                        <ul class="mega-menu-list">
+                                            <li><a href="/web/users/<%=sub.id%>/product_category">
+                                                    <%= sub&.sub_category_name%></a></li>
+                                        </ul>
+                                    </div>
+                                    <%end%>
+                                    <% end %>
+                                    <%end%>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </li>
+             
+            </ul>
+        </div>
+        <%end%>
+    </nav>
+</header>
+
+<script type="text/javascript">
+// $(document).ready(function() {
+//     $('#header .navbar-nav > li > a').click(function() {
+//         $('li a').removeClass("active");
+//         $(this).addClass("active");
+//     });
+//     $('#header .mega-menu-list > li > a').click(function() {
+//         $('li a').removeClass("active");
+//         $(this).addClass("active");
+//     });
+// });
+// $("#header ul li a").each(function() {
+//     if ((window.location.pathname.indexOf($(this).attr('href'))) > -1) {
+//         $(this).addClass('activeMenuItem');
+//     }
+// });
+</script>
+<style type="text/css">
+    .shubham:hover{
+        color: #fe7100;
+        font-weight: bold;
+    }
+</style>

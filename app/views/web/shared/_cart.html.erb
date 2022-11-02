@@ -1,0 +1,74 @@
+<section class="jumbotron text-center">
+  <div class="container">
+    <h1 class="jumbotron-heading">My Cart</h1>
+  </div>
+</section>
+
+<div class="container mb-4">
+  <div class="row">
+    <div class="col-12">
+      <div class="table-responsive">
+        <table class="table">
+          <thead>
+            <tr>
+              <th scope="col"></th>
+              <th scope="col">Product</th>
+              <th scope="col">Available</th>
+              <th scope="col" class="text-center">Quantity</th>
+              <th scope="col" class="text-right">Price</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <% @cart.cart_items.each do |cart_item| %>
+              <%= render 'web/shared/cart_cart_item' , :product => cart_item.product , :cart_item => cart_item %>
+            <% end %>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Sub-Total</td>
+              <td class="text-right">₹ <%= @cart.sub_total %></td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>Shipping</td>
+              <td class="text-right">free</td>
+            </tr>
+            <tr>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td></td>
+              <td>
+                <strong>Total</strong>
+              </td>
+              <td class="text-right">
+                <strong>₹ <%= @cart.sub_total %></strong>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+    <div class="col mb-2">
+      <div class="row">
+        <div class="col-sm-12  col-md-4">
+          <%= button_to "Continue Shopping", root_path , class: "btn btn-block btn-light" , method: :get%>
+        </div>
+        <% if(@current_cart.cart_items.count !=0 ) %>
+          <div class="col-sm-12  col-md-4">
+            <%= button_to "Empty cart", web_cart_path(@current_cart),method: :delete, data: {confirm: "Are you sure?"} , class: "btn btn-lg btn-block btn-warning text-uppercase"%>
+          </div>
+          <div class="col-sm-12 col-md-4 text-right">
+            <%= button_to "Checkout", new_web_order_path , method: :get,class: "btn btn-lg btn-block btn-info text-uppercase"%>
+          </div>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

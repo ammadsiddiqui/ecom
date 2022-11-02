@@ -1,0 +1,126 @@
+<style type="text/css">
+    .activea{
+        background: #D6D6D1!important;
+    }
+</style>
+
+<%arr = @sub_category.products.map { |p| p&.image&.first&.file&.url}%>
+<%arr = arr[0..3]%>
+<div class="container">
+    <div class="row navtop">
+        <ul class="nav1">
+            <%@all_sub_category.each do |sub|%>
+            <li class="nav2"><a class='<%= params[:id] == sub.id ? "activea" : "" %>' href="/web/users/<%=sub.id%>/movie_category">
+                    <%=sub&.sub_category_name%></a></li>
+            <%end%>
+        </ul>
+    </div>
+</div>
+<div id="carouselExampleIndicators" class="carousel slide" data-ride="carousel">
+    <ol class="carousel-indicators">
+        <%arr.each_with_index do |img,index|%>
+        <li data-target="#carouselExampleIndicators" data-slide-to="<%=index%>" class='<%= index == 0 ? "active" : "" %>'></li>
+        <%end%>
+    </ol>
+    <div class="carousel-inner">
+        <%arr.each_with_index do |img,index|%>
+        <div class='carousel-item <%= index == 0 ? "active" : "" %>'>
+            <img class="d-block w-100" src="<%=img%>" alt="First slide" height="500px;">
+        </div>
+        <%end%>
+    </div>
+    <a class="carousel-control-prev" href="#carouselExampleIndicators" role="button" data-slide="prev">
+    </a>
+    <a class="carousel-control-next" href="#carouselExampleIndicators" role="button" data-slide="next">
+    </a>
+</div>
+<div class="page-wrapper">
+    <div class="container home-wrap">
+        <h2 class="widget-title mt-0">
+            <%= @sub_category&.sub_category_name%>
+        </h2>
+        <div class="row theatres-row">
+            
+            <div class="custom-slider slidw">
+                <% @products_movie_category&.each do |product_name|%>
+
+               
+                 <a href="/web/users/<%=product_name.id%>/movie_detail" class="custom-post custom-slide">
+                    <div class="custom-img">
+                        <%#= current_user&.image&.file&.present? ? current_user&.image&.file.try(:url) : "/assets/user_no_image.png" %>
+                        <img src='<%= product_name&.image&.first&.file&.present? ? product_name&.image&.first&.file.try(:url) : "/assets/tv58.png" %>' class="img-fluid" alt="">
+                        <%#binding.pry%>
+                    </div>
+                    <div class="custom-content justify-content-end">
+                        <h4 class="custom-title">
+                            <%= product_name&.product_name%>
+                        </h4>
+                        <p class="mb-2">
+                            <%= truncate(strip_tags(product_name&.description), omision: "...", length: 130).html_safe%>
+                        </p>
+                        <!-- <a href="#" class="view-more align-self-end">View More</a> -->
+                    </div>
+             
+                </a>
+               
+                <%end%>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="/assets/web/custom.js"></script>
+<script>
+    $('.custom-slider').slick({
+      dots: false,
+      infinite: true,
+      autoplay: true,
+      speed: 300,
+      slidesToShow: 3,
+      responsive: [
+        {
+          breakpoint: 1024,
+          settings: {
+            slidesToShow: 3,
+            slidesToScroll: 1,
+            infinite: true,
+          }
+        },
+        {
+          breakpoint: 991,
+          settings: {
+            slidesToShow: 2,
+            slidesToScroll: 1,
+            infinite: true,
+          }
+        },
+        {
+          breakpoint: 767,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            slidesToShow: 1,
+            slidesToScroll: 1,
+          }
+        }
+        // You can unslick at a given breakpoint now by adding:
+        // settings: "unslick"
+        // instead of a settings object
+      ]
+    });
+
+  </script>
+<style type="text/css">
+p.paramusic {
+    margin-bottom: -40px;
+}
+</style>
+<script>
+$(document).ready(function(){
+  $('[data-toggle="popover"]').popover();   
+});
+</script>

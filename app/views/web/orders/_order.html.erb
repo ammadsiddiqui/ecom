@@ -1,0 +1,65 @@
+
+<h3>
+  Order ID
+  <%= order.id %>
+    
+  </h3>
+<p>
+  <strong>Name:</strong>
+  <%= order&.shipping_address&.name %>
+
+  ,
+  <strong>Number:</strong>
+  <%= order&.shipping_address&.number %>
+  ,
+  <strong>Pin Code:</strong>
+  <%= order&.shipping_address&.pin_code %>
+,
+  <strong>Shipping Address:</strong>
+  <%= order&.shipping_address&.address %>
+
+</p>
+<p>
+
+</p>
+<p>
+  <h3>Total price:
+    ₹ <%= order.sub_total %></h3>
+</p>
+
+ <button type="button" class="btn btn-info" data-toggle="collapse" data-target="#<%= order.id %>">Show Items</button>
+ 
+  <div class="collapse" id="<%= order.id %>">
+
+  <ul class="users">
+    <% order.cart_items.each do |item| %>
+      <%= item.quantity %>
+      x
+      <li>
+  <% if item.product.image.present? %>
+    <%= image_tag item.product&.image&.take&.file_url , size:"64x64" %>
+  <% else %>
+    <%= image_tag "/assets/images/arrow.png", size:"64x64" %>
+  <%end%>
+
+<strong>
+  Name :
+</strong>
+<%= item.product.product_name %>
+,<strong>
+  Description :
+</strong>
+<%= item.product.description %>
+<strong>
+  Price :
+</strong>
+<%= item.product.price %> ₹
+
+</li>
+    <% end %>
+    <br/>
+  </ul>
+</div>
+
+
+<hr/>

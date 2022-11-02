@@ -1,0 +1,61 @@
+ <div class="post-item">
+                            <div class="row no-gutters align-items-stretch">
+                                <%#binding.pry%>
+                                <div class="col-md-4">
+                                    <div class="post-img">
+                                        <a href="/web/users/<%=product.id%>/product_details"><img src="<%= product&.image&.take&.file_url%>" alt=""></a>
+                                    </div>
+                                </div>
+                                <div class="col-md-8">
+                                    <div class="post-details">
+                                        <p class="tag"><span>
+                                                <%= product&.category_name%> : </span>
+                                        </p>
+                                        <h4 class="post-title">
+                                            <a href="/web/users/<%=product.id%>/product_details"><%= product&.product_name%></a> :
+                                        </h4>
+                                        <p>
+                                            <%= truncate(strip_tags(product&.description), omision: "...", length: 50).html_safe%>
+                                        </p>
+                                        <p>RS.<%= product&.price%></p>
+                                       
+                                        <%if !@current_cart.products.include?(product)%>
+      <!-- Add to Basket -->
+      <%=button_to web_cart_items_path(:product_id => product.id), class: "btn btn-warning" , style: "margin-top:15px;" , params:{productID: product.id} do %>
+      <i class="fa fa-plus" style="color:black;"></i>
+      Add to Basket
+    <% end %>
+    <%else %>
+
+      <span>
+      <%=link_to web_cart_item_reduce_path(:id =>@current_cart.cart_items.find_by(product_id: product.id)) , method: :post, class: "btn btn-danger" , style: "margin-top:15px;" do %>
+      <i class="fa fa-minus" style="color:black;"></i>
+      Reduce
+    <% end %>
+
+    <!-- add -->
+    <%=link_to web_cart_item_add_path(:id => @current_cart.cart_items.find_by(product_id: product.id)) , method: :post , class: "btn btn-info" , style: "margin-top:15px;" do %>
+    <i class="fa fa-plus" style="color:black;"></i>
+    Add
+  <% end %>
+
+  <!-- Remove -->
+  <%=link_to web_cart_item_path(@current_cart.cart_items.find_by(product_id: product.id)) ,method: :delete ,class: "btn btn-warning" , style: "margin-top:15px;" do %>
+  <i class="fa fa-remove" style="color:black;"></i>
+  Remove Item
+<% end %>
+</span>
+<li>
+  Quantity:
+  <%= @current_cart.cart_items.find_by(product_id: product.id).quantity %>
+  | Total Price:
+  ₹ <%= @current_cart.cart_items.find_by(product_id: product.id).total_price %>
+</li>
+<%end %>
+                                    
+                                    </div>
+                                </div>
+                            </div>
+                       
+                        </div>
+                        

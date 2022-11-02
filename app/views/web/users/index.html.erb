@@ -1,0 +1,163 @@
+
+<div class="home-slider">
+
+    <% @products.each do |trend| %>
+    <a href="/web/users/<%= trend.id %>/product_details">
+    <div class="slide">
+        <div class="slide-img setimg cover" style="background-image: url('<%= trend&.image&.last&.file_url %>')"></div>
+        <div class="slide-content container">
+            <div class="slide-text" style="margin-left: 50px">
+            
+                <h1>
+                    <%= trend.product_name%>
+                </h1>
+                <div class="release-name">
+                    <h4>
+                        <%= trend.product_name%> (
+                        <%= trend.category_name%>,
+                        <%= trend&.updated_at&.strftime("%Y")%> )</h4>
+                    <h5>
+                        <%= trend.sub_category_name%>
+                    </h5>
+                </div>
+                <p>
+                    <%= truncate(strip_tags(trend.description), omision: "...", length: 150).html_safe%>
+                </p>
+            </div>
+        </div>
+        
+    </div>
+    </a>
+    <%end%>
+</div>
+<!-- Home Slider Close -->
+<div class="page-wrapper">
+    <div class="container home-wrap">
+        <div class="row">
+            <div class="col-md-8">
+                <div class="left-side">
+                    <h3 class="widget-title mt-0">TRENDING NOW</h3>
+                    <div class="posts", id="posts">
+                        <%# @count_trending = 0 %>
+                        <ul>
+                        <% @products&.each_with_index do |product, index|%>
+                        <div class="page-delimiter first-page" data-page="<%= params[:page] || 1 %>"></div>
+
+                    <%= render 'web/users/products' , :product => product%>
+
+                            <%end%>
+                    </div>
+                </div>
+            </div>
+           
+        </div>
+     
+
+          
+        
+       
+      
+        
+    </div>
+</div>
+  <% if @products.next_page %>
+    <div id="infinite-scrolling">
+      <%= will_paginate @products %>
+    </div>
+<% end %>
+
+<script type="text/javascript">
+$(document).ready(function() {
+    // debugger;
+    $('#1').click();
+    $('.user_type1').click(function() {
+        debugger;
+        var id = this.id;
+        $.ajax({
+            url: '/web/users',
+            type: 'get',
+            data: {
+                id: id
+            }
+        });
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $('#1').click();
+    $('.data_category').change(function() {
+        var id = this.value;
+        $.ajax({
+            url: '/web/users.js',
+            type: 'get',
+            data: {
+                id: id
+            }
+        });
+    });
+});
+</script>
+<script type="text/javascript">
+$(document).ready(function() {
+    $(".ratingText").shorten({
+        "showChars": 500,
+        "moreText": "View More",
+        "lessText": "Less",
+    });
+});
+</script>
+
+<script type="text/javascript">
+jQuery(document).ready(function() {
+    jQuery('.home-slider').slick({
+        dots: true,
+        infinite: true,
+        speed: 300,
+        slidesToShow: 1,
+    });
+
+    $('.home-slider1').slick({
+        dots: true,
+        infinite: true,
+        autoplay: true,
+        arrows: false,
+        speed: 300,
+        slidesToShow: 3,
+        responsive: [{
+                breakpoint: 1024,
+                settings: {
+                    slidesToShow: 3,
+                    slidesToScroll: 1,
+                    infinite: true,
+                }
+            },
+            {
+                breakpoint: 991,
+                settings: {
+                    slidesToShow: 2,
+                    slidesToScroll: 1,
+                    infinite: true,
+                }
+            },
+            {
+                breakpoint: 767,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            },
+            {
+                breakpoint: 480,
+                settings: {
+                    slidesToShow: 1,
+                    slidesToScroll: 1,
+                }
+            }
+            // You can unslick at a given breakpoint now by adding:
+            // settings: "unslick"
+            // instead of a settings object
+        ]
+    });
+});
+</script>

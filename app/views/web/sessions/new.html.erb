@@ -1,0 +1,79 @@
+<script src="http://ajax.aspnetcdn.com/ajax/jquery.validate/1.11.1/jquery.validate.min.js"></script>
+<div class="page-wrapper">
+    <div class="login-page">
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12 col-lg-10 col-xl-8 offset-xl-2 offset-lg-2">
+                    <div class="login-box">
+                        <div class="row no-gutters row-eq-height">
+                            <div class="col-md-5 col-xl-5">
+                                <div class="login-content-box">
+                                    <div class="login-text">
+                                        <h3>Welcome</h3>
+                                        <h2>to website</h2>
+                                        <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat.</p>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-7 col-xl-7">
+                                <div class="login-form-box">
+                                    <div class="right-heading">
+                                        <h2>Login</h2>
+                                    </div>
+                                    <%= form_tag web_sessions_path, id: "login_form", method: :post do %>
+                                    
+                                    <div class="form-group">
+                                        <br>
+                                       <input type="email" class="form-control email fas fa-envelope" placeholder="Email*" name="email" required="true" maxlength="50">
+                                        <span class="msg-error1 error"></span>
+                                    </div>
+                                    <div class="form-group">
+                                       <input type="password" class="form-control" placeholder="Password*" name="password" required="true" minlength="8" maxlength="32">
+                                        <span class="msg-error2 error"></span>
+                                    </div>
+                                    <div class="d-flex align-items-center justify-content-between custom-design">
+                                        <%# if devise_mapping.rememberable? %>
+                                        <div class="check">
+                                            <!-- <input type="checkbox" name="Remember me" value="Remember me"> Remember me -->
+                                            <%#= f.check_box :remember_me %>
+                                            <%#= f.label :remember_me %>
+                                        </div>
+                                        <%#end%>
+                                        <a>
+                                            <%#= link_to "Forgot Password?", new_password_path(resource_name) %></a>
+                                    </div>
+                                    <div class="form-group text-center mb-0">
+                                        <button class="btn btn-theme btn-block btn-lg" type="submit">LOGIN</button>
+
+                                        <!-- <a href="login.html" class="btn btn-success">Login</a> -->
+                                    </div>
+                                    
+                                    <p class="text-center mt20">New a member? <a class="yellow-text">
+                                            <%= link_to "Sign up", new_web_user_path %></a></p>
+                                    <%end%>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<style type="text/css">
+.msg-error {
+    color: #e80b0b;
+}
+
+.error {
+    color: #e80b0b;
+
+}
+
+input[type=checkbox],
+input[type=radio] {
+
+    margin-top: -5px;
+}
+</style>

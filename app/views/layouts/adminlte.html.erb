@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <title>ACS</title>
+  <%= csrf_meta_tags %>
+  <%= csp_meta_tag %>
+  <%= stylesheet_link_tag 'application', media: 'all', 'data-turbolinks-track': 'reload' %>
+  <%= javascript_pack_tag 'application', 'data-turbolinks-track': 'reload' %>
+</head>
+
+<body class="hold-transition skin-blue sidebar-mini">
+  <div class="wrapper">
+    <%= render "layouts/adminlte_header"%>
+    <%= render "layouts/adminlte_sidebar"%>
+    <div class="content-wrapper">
+      <section class="content container-fluid">
+        <%= yield %>
+      </section>
+    </div>
+    <%= render "layouts/adminlte_footer"%>
+    <%= render "layouts/adminlte_control_sidebar"%>
+    <div>
+</body>
+
+</html>

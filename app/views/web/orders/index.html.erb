@@ -1,0 +1,13 @@
+<div class="center jumbotron">
+  <h2>
+
+   All Orders (<%= @current_user.orders.count %>)
+    
+  </h2>
+</div>
+
+<% @orders.each do |order| %>
+
+      <%= render 'order' , :order => order%>
+
+  <% end %>

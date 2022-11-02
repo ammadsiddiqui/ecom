@@ -1,0 +1,33 @@
+<tr>
+  <td><%#= link_to product do%>
+    <% if product.image.present? %>
+      <%= image_tag product&.image&.take&.file_url , size:"90x90"%>
+    <% else %>
+      <%= image_tag "/assets/images/arrow.png", size:"90x90" %>
+    <%end%>
+  <%#end %>
+  x
+  <%= cart_item.quantity %>
+</td>
+<td><%= product.product_name %></td>
+<td>In stock</td>
+<td class="text-center">
+  <!-- reduce -->
+  <%=link_to web_cart_item_reduce_path(:id => cart_item) , method: :post, class: "btn btn-danger" , style: "margin-top:15px;" do %>
+  <i class="fa fa-minus" style="color:white;"></i>
+
+<% end %>
+<!-- add -->
+<%=link_to web_cart_item_add_path(:id => cart_item) , method: :post , class: "btn btn-info" , style: "margin-top:15px;" do %>
+<i class="fa fa-plus" style="color:white;"></i>
+<% end %>
+</td>
+<td class="text-right"><%= product.price %>
+₹</td>
+<td class="text-right">
+<!-- Remove -->
+<%=link_to web_cart_item_path(cart_item) ,method: :delete ,class: "btn btn-danger", data: { confirm: 'Are you sure?' } do %>
+<i class="fa fa-trash"></i>
+<% end %>
+</td>
+</tr>
